@@ -1,3 +1,4 @@
+import { SORTED_ALPHABETICALLY, SORTED_BY_DATE } from '@/services/conts'
 import { createContext, useEffect, useState } from 'react'
 
 import { requestAllHoroscopes } from '@/services/horoscopeRequest'
@@ -7,6 +8,7 @@ const HoroscopesContext = createContext()
 export function HoroscopeContextProvider({ children }) {
   const [horoscopes, setHoroscopes] = useState([])
   const [horoscopeOfDay, setHoroscopeOfDay] = useState({})
+  const [sortedBy, setSortedBy] = useState()
   function findHoroscope(idHoroscope) {
     const foundHoroscope = horoscopes.find(
       (horoscope) => horoscope.id === idHoroscope
@@ -29,10 +31,10 @@ export function HoroscopeContextProvider({ children }) {
       return 0
     })
     setHoroscopes(orderedHoroscopes)
+    setSortedBy(SORTED_ALPHABETICALLY)
   }
 
   function sortByDate() {
-    console.log('🚀 ~ sortByDate:')
     const orderedHoroscopes = horoscopes.sort((a, b) => {
       const endMonthA = a.end_date.split('-')[1]
       const endMonthB = b.end_date.split('-')[1]
@@ -44,8 +46,8 @@ export function HoroscopeContextProvider({ children }) {
       }
       return 0
     })
-    console.log('🚀 ~ orderedHoroscopes:', orderedHoroscopes)
     setHoroscopes(orderedHoroscopes)
+    setSortedBy(SORTED_BY_DATE)
   }
 
   function transformToCompleteDate(propDate) {
@@ -88,9 +90,10 @@ export function HoroscopeContextProvider({ children }) {
     horoscopes: horoscopes ?? [],
     findHoroscope,
     getAllHoroscopes,
-    sortAphabetically,
     horoscopeOfDay,
-    sortByDate
+    sortAphabetically,
+    sortByDate,
+    sortedBy
   }
 
   useEffect(() => {

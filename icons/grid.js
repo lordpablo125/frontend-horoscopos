@@ -1,10 +1,9 @@
 import React from 'react'
 
 export default function GridIcon(props) {
-  console.log('🚀 ~ props?.fill:', props?.fill)
   return (
     <svg width="3rem" viewBox="0 -0.5 21 21" version="1.1" {...props}>
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g id="SVGRepo_bgCarrier"></g>
       <g id="SVGRepo_iconCarrier">
         {' '}
         <defs> </defs>{' '}

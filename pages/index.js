@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 
 import Card from '@/components/Card'
+import { GRID } from '@/services/conts'
 import HoroscopesContext from '@/store/horoscopes-context'
 import { Inter } from 'next/font/google'
 import SelectFilter from '@/components/SelectFilter'
@@ -9,8 +10,8 @@ import { useFilter } from '@/hooks/useFilter'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const { horoscopes, horoscopeOfDay } = useContext(HoroscopesContext)
-  const [isGrid, setIsGrid] = useState(true) // comment why
+  const { horoscopes } = useContext(HoroscopesContext)
+  const [layout, setLayout] = useState(GRID) // comment why
   const [searchString, setSearchString] = useState('')
   const { filterHoroscopes } = useFilter(searchString)
   const filteredHoroscopes = filterHoroscopes(horoscopes)
@@ -21,16 +22,16 @@ export default function Home() {
     >
       <header className="flex justify-between w-full flex-col align-middle">
         <section className="flex justify-center mb-6">
-          <h1 className="text-6xl font-bold">Horoscopo</h1>
+          <h1 className="text-6xl font-bold text-purple-900">Horoscopo</h1>
         </section>
-        <SelectFilter setIsGrid={setIsGrid} setSearchString={setSearchString} />
+        <SelectFilter
+          layout={layout}
+          setLayout={setLayout}
+          setSearchString={setSearchString}
+        />
       </header>
       {horoscopes.length > 0 && (
-        <Card
-          horoscopes={filteredHoroscopes}
-          isGrid={isGrid}
-          horoscopeOfDay={horoscopeOfDay}
-        />
+        <Card horoscopes={filteredHoroscopes} layout={layout} />
       )}
     </main>
   )

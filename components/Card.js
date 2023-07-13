@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
+import { GRID, LIST } from '@/services/conts'
+import React, { useContext, useState } from 'react'
 
-export default function Card({ horoscopes, isGrid, horoscopeOfDay }) {
-  const [selectedHoroscope, setSelectedHoroscope] = useState(horoscopes[0])
+import HoroscopesContext from '@/store/horoscopes-context'
 
-  function handleClick(idHoroscope) {
-    const newSelectedHoroscope = horoscopes.filter(
-      (horos) => horos.id === idHoroscope
-    )
-    setSelectedHoroscope(newSelectedHoroscope[0])
-  }
+export default function Card({ horoscopes, layout }) {
+  const { horoscopeOfDay, sortedBy } = useContext(HoroscopesContext)
+
   return (
     <>
       <section className="flex justify-center pb-4">
@@ -38,13 +35,13 @@ export default function Card({ horoscopes, isGrid, horoscopeOfDay }) {
             <article
               onClick={() => handleClick(horocope?.id)}
               key={horocope?.id}
-              className={`flex shadow-md rounded bg-white border-solid border-gray-400 border-4 ${
-                isGrid ? 'basis-[31%]' : 'w-full'
-              }`}
+              className={`flex shadow-md rounded  border-solid border-gray-400 border-4 ${
+                layout === GRID ? 'basis-[31%]' : 'w-full'
+              }  ${sortedBy ? 'bg-white' : ''}`}
             >
               <div className="p-4">
-                {isGrid ? (
-                  <h3 className="text-2xl font-bold mx-4 mb-4 pl-4">
+                {layout === GRID ? (
+                  <h3 className="flex justify-center text-2xl font-bold mb-4 ">
                     {horocope?.name}
                   </h3>
                 ) : (
@@ -57,7 +54,7 @@ export default function Card({ horoscopes, isGrid, horoscopeOfDay }) {
                 />
               </div>
               <div className="w-2/3 py-4 pr-4">
-                {!isGrid ? (
+                {layout === LIST ? (
                   <h3 className="text-2xl font-bold mx-4 mb-4 pl-4">
                     {horocope?.name}
                   </h3>
