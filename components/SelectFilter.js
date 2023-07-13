@@ -41,7 +41,7 @@ export default function SelectFilter({ layout, setLayout, setSearchString }) {
           id="searchBar"
           role="searchBar"
           className="p-4 pl-6 rounded   shadow-md w-full"
-          placeholder="Search for a horoscope"
+          placeholder="Buscar horoscopo"
           onChange={handleChangeInput}
         />
       </div>
